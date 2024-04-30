@@ -42,3 +42,9 @@ body {
 .actions {
     margin-top: 20px; /* Agrega espacio entre el schedule y los botones */
 }
+
+img {
+    width: 100px;
+    height: auto;
+    margin: 10px;
+}
