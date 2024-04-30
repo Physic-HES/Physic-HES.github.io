@@ -18,7 +18,7 @@ function calculateHours() {
             if (hours >= 4) {
                 dayElement.innerHTML += ' ✔️';
             } else {
-                dayElement.innerHTML = ' ⚠️';
+                dayElement.innerHTML = ' ';
             }
 
             totalHours += hours;
