@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Horas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Horas</h1>
+        <div id="schedule">
+            <div class="day">
+                <label for="monday">Lunes:</label>
+                <input type="time" id="monday-start">
+                <input type="time" id="monday-end">
+                <span id="monday-output"></span>
+            </div>
+            <div class="day">
+                <label for="tuesday">Martes:</label>
+                <input type="time" id="tuesday-start">
+                <input type="time" id="tuesday-end">
+                <span id="tuesday-output"></span>
+            </div>
+            <div class="day">
+                <label for="wednesday">Miercoles:</label>
+                <input type="time" id="wednesday-start">
+                <input type="time" id="wednesday-end">
+                <span id="wednesday-output"></span>
+            </div>
+            <div class="day">
+                <label for="thursday">Jueves:</label>
+                <input type="time" id="thursday-start">
+                <input type="time" id="thursday-end">
+                <span id="thursday-output"></span>
+            </div>
+            <div class="day">
+                <label for="friday">Viernes:</label>
+                <input type="time" id="friday-start">
+                <input type="time" id="friday-end">
+                <span id="friday-output"></span>
+            </div>
+        </div>
+        <div class="actions">
+            <button onclick="calculateHours()">Calcular</button>
+            <div id="result"></div>
+        </div>
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333; /* Color de fondo oscuro */
+    color: #fff; /* Color del texto claro */
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    align-items: center; /* Centrar el contenido verticalmente */
+    height: 100vh; /* Hacer que la altura de la página ocupe toda la pantalla */
+    margin: 0; /* Elimina el margen predeterminado del cuerpo */
+}
+
+.container {
+    max-width: 600px;
+    padding: 20px;
+    background-color: #444;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en columna */
+    align-items: center; /* Alinea los elementos horizontalmente en el centro */
+}
+
+#schedule {
+    display: flex;
+    flex-direction: column; /* Alinea los días en columna */
+    align-items: center; /* Alinea los días horizontalmente en el centro */
+}
+
+.day {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center; /* Alinea los elementos de cada día verticalmente */
+}
+
+.day label {
+    width: 100px; /* Ancho fijo para las etiquetas de los días */
+}
+
+.actions {
+    margin-top: 20px; /* Agrega espacio entre el schedule y los botones */
+}
