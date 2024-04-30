@@ -14,11 +14,11 @@ function calculateHours() {
             const hours = (endTime - startTime) / (1000 * 60 * 60);
 
             const dayElement = document.getElementById(day.toLowerCase() + '-output');
-            dayElement.innerHTML = ' ';
+            dayElement.innerHTML = '  ';
             if (hours >= 4) {
-                dayElement.innerHTML += '✔️';
+                dayElement.innerHTML += ' ✔️';
             } else {
-                dayElement.innerHTML = ' ';
+                dayElement.innerHTML = '  ';
             }
 
             totalHours += hours;
