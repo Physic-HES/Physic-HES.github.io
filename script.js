@@ -37,6 +37,6 @@ function calculateHours() {
     } else {
         const remainingHours_hs = requiredHours*60 - totalHours*60;
         const remainingHours_min = Math.trunc(requiredHours*60 - totalHours*60);
-        resultDiv.innerHTML += `¡Estas al horno! 😬, Te faltan ${Math.trunc(remainingHours_hs/60)} hs y ${((Math.trunc(remainingHours_min)/60-Math.trunc(remainingHours_hs/60))*60).toFixed(0)} min para cumplir con ${Math.trunc(requiredHours)} horas diarias<br>`;
+        resultDiv.innerHTML += `¡Estas al horno! 😬, Te faltan ${Math.trunc(remainingHours_hs/60)} hs y ${((Math.trunc(remainingHours_min)/60-Math.trunc(remainingHours_hs/60))*60).toFixed(0)} min para cumplir con las ${Math.trunc(requiredHours)} horas<br>`;
     }
 }
