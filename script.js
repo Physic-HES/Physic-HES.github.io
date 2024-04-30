@@ -33,10 +33,10 @@ function calculateHours() {
     if (totalHours*60 >= requiredHours*60) {
         const remainingHoursF_hs = totalHours*60 - requiredHours*60;
         const remainingHoursF_min = Math.trunc(totalHours*60 - requiredHours*60);
-        resultDiv.innerHTML += `¡Sos Crack! 😎, Tenés ${Math.trunc(remainingHoursF_hs/60)} hs y ${Math.trunc((Math.trunc(remainingHoursF_min)/60-Math.trunc(remainingHoursF_hs/60))*60)} min a favor <br>`;
+        resultDiv.innerHTML += `¡Sos Crack! 😎, Tenés ${Math.trunc(remainingHoursF_hs/60)} hs y ${((Math.trunc(remainingHoursF_min)/60-Math.trunc(remainingHoursF_hs/60))*60).toFixed(0)} min a favor <br>`;
     } else {
         const remainingHours_hs = requiredHours*60 - totalHours*60;
         const remainingHours_min = Math.trunc(requiredHours*60 - totalHours*60);
-        resultDiv.innerHTML += `¡Estas al horno! 😬, Te faltan ${Math.trunc(remainingHours_hs/60)} hs y ${Math.trunc((Math.trunc(remainingHours_min)/60-Math.trunc(remainingHours_hs/60))*60)} min para cumplir con ${Math.trunc(requiredHours)} horas diarias<br>`;
+        resultDiv.innerHTML += `¡Estas al horno! 😬, Te faltan ${Math.trunc(remainingHours_hs/60)} hs y ${((Math.trunc(remainingHours_min)/60-Math.trunc(remainingHours_hs/60))*60).toFixed(0)} min para cumplir con ${Math.trunc(requiredHours)} horas diarias<br>`;
     }
 }
