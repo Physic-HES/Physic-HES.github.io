@@ -14,7 +14,7 @@ function calculateHours() {
             const hours = (endTime - startTime) / (1000 * 60 * 60);
 
             const dayElement = document.getElementById(day.toLowerCase() + '-output');
-            dayElement.innerHTML = '   ';
+            dayElement.innerHTML = '  ';
             if (hours >= 4) {
                 dayElement.innerHTML += ' ✔️';
             } else {
@@ -33,7 +33,7 @@ function calculateHours() {
     if (totalHours*60 >= requiredHours*60) {
         const remainingHoursF_hs = totalHours*60 - requiredHours*60;
         const remainingHoursF_min = Math.trunc(totalHours*60 - requiredHours*60);
-        resultDiv.innerHTML += `¡Sos Crack! 😎, tenés ${Math.trunc(remainingHoursF_hs/60)} hs y ${Math.trunc(remainingHoursF_min)} min a favor <br>`;
+        resultDiv.innerHTML += `¡Sos Crack! 😎, tenés ${Math.trunc(remainingHoursF_hs/60)} hs y ${Math.trunc((Math.trunc(remainingHoursF_min)/60-Math.trunc(remainingHoursF_hs/60))*60)} min a favor <br>`;
     } else {
         const remainingHours_hs = requiredHours*60 - totalHours*60;
         const remainingHours_min = Math.trunc(requiredHours*60 - totalHours*60);
