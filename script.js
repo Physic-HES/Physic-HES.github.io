@@ -27,7 +27,7 @@ function calculateHours() {
     });
 
     const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = ` <br>`;
+    resultDiv.innerHTML = ` \n <br>`;
 
     const requiredHours = 8 * completedDays;
     if (totalHours*60 >= requiredHours*60) {
