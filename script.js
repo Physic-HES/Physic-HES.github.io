@@ -46,6 +46,6 @@ function calculateHours() {
         }
     }
     if (suggestedHours) {
-        resultDiv.innerHTML += `Deberías salir a las ${Math.trunc(suggestedHours)}:${((suggestedHours-Math.trunc(suggestedHours))*60).toFixed(0)} hs. No cuelgues! afuera hay una vida<br>`;
+        resultDiv.innerHTML += `Deberías salir a las ${Math.trunc(suggestedHours)}:${((suggestedHours-Math.trunc(suggestedHours))*60).toFixed(0).padStart(2,'0')} hs. No cuelgues! afuera hay una vida<br>`;
     }
 }
