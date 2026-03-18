@@ -64,18 +64,39 @@ async function captureAndCopy() {
             scale: 2,
             useCORS: true,
             allowTaint: true,
+            // Solución definitiva para el logo y espacio: Capturar desde el origen (0,0) del clon
+            x: 0,
+            y: 0,
             scrollX: 0,
-            scrollY: -window.scrollY,
+            scrollY: 0,
             onclone: (clonedDoc) => {
                 const clonedContainer = clonedDoc.querySelector('.container');
-                const clonedLogo = clonedDoc.getElementById('main-logo');
-                if (clonedLogo) {
-                    clonedLogo.style.width = '120px';
-                    clonedLogo.style.height = '120px';
-                    clonedLogo.style.display = 'block';
-                    clonedLogo.style.margin = '0 auto 15px auto';
+                
+                // Forzar que el clon esté al principio del canvas invisible
+                clonedContainer.style.margin = '0';
+                clonedContainer.style.position = 'absolute';
+                clonedContainer.style.top = '0';
+                clonedContainer.style.left = '0';
+                clonedContainer.style.width = '550px';
+                clonedContainer.style.maxWidth = '550px';
+                clonedContainer.style.transform = 'none';
+                clonedContainer.style.boxShadow = 'none';
+
+                // Asegurar que el encabezado y el logo tengan sus dimensiones exactas
+                const header = clonedDoc.querySelector('.header');
+                const logo = clonedDoc.getElementById('main-logo');
+                if (header) {
+                    header.style.marginBottom = '30px';
+                    header.style.minHeight = '160px';
+                }
+                if (logo) {
+                    logo.style.width = '120px';
+                    logo.style.height = '120px';
+                    logo.style.display = 'block';
+                    logo.style.margin = '0 auto 15px auto';
                 }
 
+                // Reemplazar todos los inputs y botones dinámicos por bloques estáticos
                 const originalInputs = container.querySelectorAll('input[type="time"]');
                 const clonedInputs = clonedContainer.querySelectorAll('input[type="time"]');
                 clonedInputs.forEach((input, index) => {
@@ -93,11 +114,6 @@ async function captureAndCopy() {
                     btnReplacement.innerText = originalCalcBtn.innerText;
                     clonedCalcBtn.parentNode.replaceChild(btnReplacement, clonedCalcBtn);
                 }
-
-                clonedContainer.style.boxShadow = 'none';
-                clonedContainer.style.transform = 'none';
-                clonedContainer.style.margin = '0 auto';
-                clonedContainer.style.position = 'relative';
             }
         });
 
@@ -144,74 +160,41 @@ async function handlePDF(input) {
         const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
         const page = await pdf.getPage(1);
         const textContent = await page.getTextContent();
-        
         const textItems = textContent.items.map(item => item.str);
         const fullText = textItems.join(' ');
         
-        // Expresión regular para encontrar líneas de fichada: DD-MM-YYYY Día HH:MM E-CAC, HH:MM S-CAC
-        // Ejemplo: 16-03-2026 Lunes 09:13 E-CAC, 17:22 S-CAC
         const dayRegex = /(\d{2}-\d{2}-\d{4})\s+(Lunes|Martes|Miercoles|Jueves|Viernes|Sabado|Domingo)\s+([^0-9]*)/g;
-        
         let matches = [];
         let match;
         while ((match = dayRegex.exec(fullText)) !== null) {
             const dateStr = match[1];
             const dayName = match[2];
             const remaining = fullText.substring(match.index + match[0].length, match.index + match[0].length + 100);
-            
             const times = [];
             const timeMatch = /(\d{2}:\d{2})\s+[ES]-CAC/g;
             let t;
             while ((t = timeMatch.exec(remaining)) !== null && times.length < 2) {
                 times.push(t[1]);
             }
-            
-            matches.push({
-                date: dateStr,
-                day: dayName,
-                start: times[0] || "",
-                end: times[1] || ""
-            });
+            matches.push({ date: dateStr, day: dayName, start: times[0] || "", end: times[1] || "" });
         }
 
-        // Encontrar la última semana con registros (último bloque de Lunes a Viernes con datos)
-        // Buscamos de atrás para adelante
         let lastWeek = [];
         for (let i = matches.length - 1; i >= 0; i--) {
             if (matches[i].start !== "") {
-                // Encontramos un día con datos. Ahora retrocedemos hasta el lunes anterior.
                 const daysMap = { 'Lunes': 0, 'Martes': 1, 'Miercoles': 2, 'Jueves': 3, 'Viernes': 4 };
-                const currentDayName = matches[i].day;
-                
-                if (daysMap[currentDayName] !== undefined) {
-                    // Es un día de semana. Buscamos el lunes de esta misma semana.
+                if (daysMap[matches[i].day] !== undefined) {
                     let mondayIdx = -1;
-                    // Buscamos hacia atrás el lunes más cercano
                     for (let j = i; j >= 0; j--) {
-                        if (matches[j].day === 'Lunes') {
-                            mondayIdx = j;
-                            break;
-                        }
+                        if (matches[j].day === 'Lunes') { mondayIdx = j; break; }
                     }
-                    
-                    if (mondayIdx !== -1) {
-                        // Tenemos el lunes. Tomamos los 5 días desde ahí.
-                        lastWeek = matches.slice(mondayIdx, mondayIdx + 5);
-                        break;
-                    }
+                    if (mondayIdx !== -1) { lastWeek = matches.slice(mondayIdx, mondayIdx + 5); break; }
                 }
             }
         }
 
         if (lastWeek.length > 0) {
-            const idMap = {
-                'Lunes': 'monday',
-                'Martes': 'tuesday',
-                'Miercoles': 'wednesday',
-                'Jueves': 'thursday',
-                'Viernes': 'friday'
-            };
-
+            const idMap = { 'Lunes': 'monday', 'Martes': 'tuesday', 'Miercoles': 'wednesday', 'Jueves': 'thursday', 'Viernes': 'friday' };
             lastWeek.forEach(dayData => {
                 const prefix = idMap[dayData.day];
                 if (prefix) {
@@ -219,10 +202,9 @@ async function handlePDF(input) {
                     document.getElementById(prefix + '-end').value = dayData.end;
                 }
             });
-
             btn.innerText = '✅ ¡Importado!';
             btn.style.backgroundColor = '#28a745';
-            calculateHours(); // Calcular automáticamente después de importar
+            calculateHours();
         } else {
             alert('No se encontraron registros de fichadas en el PDF.');
             btn.innerText = originalText;
@@ -234,7 +216,7 @@ async function handlePDF(input) {
         btn.innerText = originalText;
     } finally {
         btn.disabled = false;
-        input.value = ""; // Reset input
+        input.value = "";
         setTimeout(() => {
             btn.innerText = '📄 Importar PDF';
             btn.style.backgroundColor = '';
