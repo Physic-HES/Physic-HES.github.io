@@ -2,6 +2,7 @@ function calculateHours() {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     let totalHours = 0;
     let completedDays = 0;
+    let suggestedHours = null;
 
     days.forEach(day => {
         const start = document.getElementById(day.toLowerCase() + '-start').value;
@@ -31,7 +32,7 @@ function calculateHours() {
     });
 
     const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = ` \n <br>`;
+    resultDiv.innerHTML = "";
 
     const requiredHours = 8 * completedDays;
     if (completedDays) {
@@ -47,5 +48,90 @@ function calculateHours() {
     }
     if (suggestedHours) {
         resultDiv.innerHTML += `Deberías salir a las ${Math.trunc(suggestedHours)}:${((suggestedHours-Math.trunc(suggestedHours))*60).toFixed(0).padStart(2,'0')} hs. No cuelgues! afuera hay una vida<br>`;
+    }
+}
+
+async function captureAndCopy() {
+    const container = document.querySelector('.container');
+    const btn = document.getElementById('capture-btn');
+    
+    btn.innerText = '⌛ Capturando...';
+    btn.disabled = true;
+
+    try {
+        const canvas = await html2canvas(container, {
+            backgroundColor: '#333',
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            scrollX: 0,
+            scrollY: -window.scrollY, // Corregir desfase de scroll
+            onclone: (clonedDoc) => {
+                const clonedContainer = clonedDoc.querySelector('.container');
+                
+                // 1. Asegurar dimensiones del Logo en el clon
+                const clonedLogo = clonedDoc.getElementById('main-logo');
+                if (clonedLogo) {
+                    clonedLogo.style.width = '110px';
+                    clonedLogo.style.height = '110px';
+                    clonedLogo.style.display = 'block';
+                    clonedLogo.style.margin = '0 auto 15px auto';
+                }
+
+                // 2. Reemplazar inputs por texto (solución definitiva para renderizado)
+                const originalInputs = container.querySelectorAll('input[type="time"]');
+                const clonedInputs = clonedContainer.querySelectorAll('input[type="time"]');
+                clonedInputs.forEach((input, index) => {
+                    const replacement = clonedDoc.createElement('div');
+                    replacement.className = 'time-replacement';
+                    replacement.innerText = originalInputs[index].value || "--:--";
+                    input.parentNode.replaceChild(replacement, input);
+                });
+
+                // 3. Reemplazar botón por bloque estático
+                const originalCalcBtn = document.getElementById('calc-btn');
+                const clonedCalcBtn = clonedDoc.getElementById('calc-btn');
+                if (clonedCalcBtn) {
+                    const btnReplacement = clonedDoc.createElement('div');
+                    btnReplacement.className = 'button-replacement';
+                    btnReplacement.innerText = originalCalcBtn.innerText;
+                    clonedCalcBtn.parentNode.replaceChild(btnReplacement, clonedCalcBtn);
+                }
+
+                // 4. Limpiar estilos del contenedor para la captura
+                clonedContainer.style.boxShadow = 'none';
+                clonedContainer.style.transform = 'none';
+                clonedContainer.style.margin = '0 auto';
+                clonedContainer.style.position = 'relative';
+            }
+        });
+
+        canvas.toBlob(async (blob) => {
+            if (!blob) return;
+            try {
+                const item = new ClipboardItem({ "image/png": blob });
+                await navigator.clipboard.write([item]);
+                btn.innerText = '✅ ¡Copiado!';
+                btn.style.backgroundColor = '#28a745';
+            } catch (err) {
+                // Fallback descarga automática si falla el portapapeles
+                const link = document.createElement('a');
+                link.download = 'mi_horario.png';
+                link.href = canvas.toDataURL();
+                link.click();
+                btn.innerText = '💾 Descargado';
+            }
+
+            setTimeout(() => {
+                btn.innerText = '📸 Capturar y Copiar al Portapapeles';
+                btn.style.backgroundColor = '';
+                btn.disabled = false;
+            }, 3000);
+        }, 'image/png');
+
+    } catch (error) {
+        console.error(error);
+        btn.innerText = '📸 Reintentar';
+        btn.disabled = false;
     }
 }

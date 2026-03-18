@@ -8,46 +8,52 @@
     <link rel="icon" type="image/x-icon" href="favicon2.png">
 </head>
 <body>
-    <div class="container">
-        <img src="Logo_cnea.png" alt="Logo_cnea">
-        <h1>HorasApp WEB</h1>
-        <div id="schedule">
-            <div class="day">
-                <label for="monday">Lunes:</label>
-                <input type="time" id="monday-start">
-                <input type="time" id="monday-end">
-                <span id="monday-output"></span>
+    <div id="main-wrapper">
+        <div class="container">
+            <div class="header">
+                <img src="Logo_cnea.png" alt="Logo_cnea" id="main-logo">
+                <h1>HorasApp WEB</h1>
             </div>
-            <div class="day">
-                <label for="tuesday">Martes:</label>
-                <input type="time" id="tuesday-start">
-                <input type="time" id="tuesday-end">
-                <span id="tuesday-output"></span>
+            <div id="schedule">
+                <div class="day">
+                    <label for="monday">Lunes:</label>
+                    <input type="time" id="monday-start">
+                    <input type="time" id="monday-end">
+                    <span id="monday-output"></span>
+                </div>
+                <div class="day">
+                    <label for="tuesday">Martes:</label>
+                    <input type="time" id="tuesday-start">
+                    <input type="time" id="tuesday-end">
+                    <span id="tuesday-output"></span>
+                </div>
+                <div class="day">
+                    <label for="wednesday">Miercoles:</label>
+                    <input type="time" id="wednesday-start">
+                    <input type="time" id="wednesday-end">
+                    <span id="wednesday-output"></span>
+                </div>
+                <div class="day">
+                    <label for="thursday">Jueves:</label>
+                    <input type="time" id="thursday-start">
+                    <input type="time" id="thursday-end">
+                    <span id="thursday-output"></span>
+                </div>
+                <div class="day">
+                    <label for="friday">Viernes:</label>
+                    <input type="time" id="friday-start">
+                    <input type="time" id="friday-end">
+                    <span id="friday-output"></span>
+                </div>
             </div>
-            <div class="day">
-                <label for="wednesday">Miercoles:</label>
-                <input type="time" id="wednesday-start">
-                <input type="time" id="wednesday-end">
-                <span id="wednesday-output"></span>
-            </div>
-            <div class="day">
-                <label for="thursday">Jueves:</label>
-                <input type="time" id="thursday-start">
-                <input type="time" id="thursday-end">
-                <span id="thursday-output"></span>
-            </div>
-            <div class="day">
-                <label for="friday">Viernes:</label>
-                <input type="time" id="friday-start">
-                <input type="time" id="friday-end">
-                <span id="friday-output"></span>
+            <div class="actions">
+                <button id="calc-btn" class="main-button" onclick="calculateHours()">¿A ver que onda?</button>
+                <div id="result"></div>
             </div>
         </div>
-        <div class="actions">
-            <button onclick="calculateHours()">¿A ver que onda?</button>
-            <div id="result"></div>
-        </div>
-        <script src="script.js"></script>
+        <button id="capture-btn" onclick="captureAndCopy()">📸 Capturar y Copiar al Portapapeles</button>
     </div>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
