@@ -30,21 +30,19 @@ body {
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     text-align: center;
-    /* Forzar que el contenedor sea relativo para la captura */
     position: relative;
     overflow: hidden;
 }
 
-/* Encabezado rígido para evitar superposición */
 .header {
     margin-bottom: 30px;
     width: 100%;
-    display: block; /* Bloque puro para evitar flexbox weirdness */
+    display: block;
 }
 
 #main-logo {
     width: 120px;
-    height: 120px; /* Tamaño fijo obligatorio */
+    height: 120px;
     display: block;
     margin: 0 auto 15px auto;
     object-fit: contain;
@@ -89,9 +87,13 @@ input[type="time"] {
     width: 100%;
     text-align: center;
     outline: none;
+    transition: border-color 0.3s;
 }
 
-/* Elemento que reemplazará al input en la captura */
+input[type="time"]:focus {
+    border-color: #007bff;
+}
+
 .time-replacement {
     background-color: #555;
     border: 2px solid #666;
@@ -127,7 +129,11 @@ input[type="time"] {
     display: inline-block;
 }
 
-/* Reemplazo para el botón en la captura */
+.main-button:hover {
+    background-color: #0069d9;
+    transform: translateY(-1px);
+}
+
 .button-replacement {
     background-color: #007bff;
     color: white;
@@ -156,20 +162,45 @@ input[type="time"] {
     align-items: center;
 }
 
-#capture-btn {
-    background-color: #28a745;
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#import-btn, #capture-btn {
     color: white;
     border: none;
-    padding: 15px 35px;
+    padding: 15px 30px;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: bold;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#capture-btn:hover {
+#import-btn {
+    background-color: #6c757d;
+}
+
+#import-btn:hover {
+    background-color: #5a6268;
     transform: translateY(-4px) scale(1.05);
+}
+
+#capture-btn {
+    background-color: #28a745;
+}
+
+#capture-btn:hover {
     background-color: #218838;
+    transform: translateY(-4px) scale(1.05);
+}
+
+img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
 }

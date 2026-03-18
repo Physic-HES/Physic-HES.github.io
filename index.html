@@ -51,8 +51,13 @@
                 <div id="result"></div>
             </div>
         </div>
-        <button id="capture-btn" onclick="captureAndCopy()">📸 Capturar y Copiar al Portapapeles</button>
+        <div class="button-group">
+            <button id="import-btn" onclick="document.getElementById('pdf-input').click()">📄 Importar PDF</button>
+            <input type="file" id="pdf-input" accept="application/pdf" style="display: none;" onchange="handlePDF(this)">
+            <button id="capture-btn" onclick="captureAndCopy()">📸 Capturar y Copiar al Portapapeles</button>
+        </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="script.js?v=1.1"></script>
 </body>
