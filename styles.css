@@ -152,6 +152,72 @@ input[type="time"] {
     align-items: center;
 }
 
+/* Optimización para Móviles */
+@media (max-width: 600px) {
+    #main-wrapper {
+        padding: 20px 10px;
+        gap: 20px;
+    }
+
+    .container {
+        padding: 25px 15px; /* Reducimos el relleno lateral drásticamente */
+        border-radius: 15px;
+    }
+
+    .header {
+        min-height: 140px;
+        margin-bottom: 20px;
+    }
+
+    #main-logo {
+        width: 100px;
+        height: 100px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .day {
+        grid-template-columns: 75px 1fr 1fr 35px; /* Etiquetas más cortas y tildes más compactas */
+        gap: 8px; /* Menos espacio entre columnas */
+    }
+
+    .day label {
+        font-size: 14px;
+        width: 75px;
+    }
+
+    input[type="time"] {
+        padding: 8px 4px;
+        font-size: 13px;
+        min-width: 0; /* Permite que el input se encoja */
+    }
+
+    #monday-output, #tuesday-output, #wednesday-output, #thursday-output, #friday-output {
+        width: 35px;
+        font-size: 16px;
+    }
+
+    .main-button {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    #import-btn, #capture-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+        width: 100%; /* Botones de acción uno sobre otro en móviles pequeños */
+    }
+
+    .button-group {
+        width: 100%;
+        max-width: 400px;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 .button-group {
     display: flex;
     gap: 15px;
