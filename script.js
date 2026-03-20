@@ -4,6 +4,9 @@ function calculateHours() {
     let completedDays = 0;
     let suggestedHours = null;
 
+    const isInternMode = document.getElementById('intern-mode').checked;
+    const dailyTarget = isInternMode ? 4 : 8;
+
     days.forEach(day => {
         const start = document.getElementById(day.toLowerCase() + '-start').value;
         const end = document.getElementById(day.toLowerCase() + '-end').value;
@@ -27,14 +30,14 @@ function calculateHours() {
         } else if (start && !end) {
             const reftime = new Date('1970-01-01T00:00')
             const suggestedTime = new Date('1970-01-01T' + start);
-            suggestedHours = 8+(suggestedTime-reftime)/(1000*60*60)-(totalHours-8*completedDays);
+            suggestedHours = dailyTarget+(suggestedTime-reftime)/(1000*60*60)-(totalHours-dailyTarget*completedDays);
         }
     });
 
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = "";
 
-    const requiredHours = 8 * completedDays;
+    const requiredHours = dailyTarget * completedDays;
     if (completedDays) {
         if (totalHours*60 >= requiredHours*60) {
             const remainingHoursF_hs = totalHours*60 - requiredHours*60;
